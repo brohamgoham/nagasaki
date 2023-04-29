@@ -1,3 +1,10 @@
+mod asset;
+mod database;
+mod tui;
+mod listener;
+
 fn main() {
-    println!("Hello, world!");
+    listener::listener();
+    tui::start_terminal()
+        .expect("Error trying to start the terminal");
 }

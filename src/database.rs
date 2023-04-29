@@ -21,7 +21,7 @@ pub enum Error {
 }
 
 #[derive(Serialize, Deserialize, Debug)]
-pub struct Person {
+pub struct Planet {
     pub id: usize,
     pub name: String,
     pub category: String,
