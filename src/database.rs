@@ -36,7 +36,7 @@ pub fn read_data() -> Result<Vec<Planet>, Error> {
     let parsed: Vec<Planet> = serde_json::from_str(&db_content)
         .expect("Error trying to parse the DB FILE!!!!!");
 
-    OK(parsed)
+    Ok(parsed)
 }
 
 pub fn add_rand() -> Result<Vec<Planet>, Error> {
@@ -69,14 +69,12 @@ pub fn add_rand() -> Result<Vec<Planet>, Error> {
 
 pub fn remove_planet_index(planet_list: &mut ListState) -> Result<(), Error> {
     if let Some(select) = planet_list.selected() {
-        let db_content = fs::read_to_string(DB_PATH)
-            .expect("Error trying to read the DB FILE!");
-
+        let db_content = fs::read_to_string(DB_PATH)?;
         let mut parsed: Vec<Planet> = serde_json::from_str(&db_content)?;
 
         if parsed.len() > 0 {
             parsed.remove(select);
-            fs::write(DB_PATH, &serde_json::from_vec(&parsed)
+            fs::write(DB_PATH, &serde_json::to_vec(&parsed)
                .expect("error trying to write the db file!")
             )?;
 

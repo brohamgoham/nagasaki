@@ -39,9 +39,9 @@ pub fn render_home<'a>() -> Paragraph<'a> {
     .block(
         Block::default()
             .borders(Borders::ALL)
-            .style(Style::default().fb(Color::Cyan))
+            .style(Style::default().fg(Color::Cyan))
             .title("Hercules-Corona Borealis Great Wall - Supercluster")
-            .border_type(BorderType::Doubled),
+            .border_type(BorderType::Double),
     );
     home
 }
@@ -121,7 +121,7 @@ pub fn render_planets<'a>(planet_list_state: &ListState) -> (Option<List<'a>>, O
             .title("InterPlanetary Details")
             .border_type(BorderType::Plain),
     )
-    .width(&[
+    .widths(&[
         Constraint::Percentage(5),
         Constraint::Percentage(20),
         Constraint::Percentage(20),

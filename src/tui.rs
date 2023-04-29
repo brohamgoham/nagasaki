@@ -62,7 +62,7 @@ pub fn start_terminal() -> Result <(), Box<dyn std::error::Error>> {
                 }
             }
 
-            if last_tic.elapsed() >= tic_rate {
+            if last_tic.elapsed() >= tick_rate {
                 if let Ok(_) = tx.send(Event::Tick) {
                     last_tic = Instant::now();
                 }
@@ -107,7 +107,7 @@ pub fn start_terminal() -> Result <(), Box<dyn std::error::Error>> {
                 .collect();
 
             let tabs = Tabs::new(menu)
-                .select(active_menu_item.int())
+                .select(active_menu_item.into())
                 .block(Block::default().title("Menu").borders(Borders::ALL))
                 .style(Style::default().fg(Color::Cyan))
                 .highlight_style(Style::default().fg(Color::Yellow))
