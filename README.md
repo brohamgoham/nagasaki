@@ -1,5 +1,5 @@
 # planets-rs
-Rust Terminal UI for generating Planents
- 
+Rust Terminal UI for generating Planets
 
- i
+Terminal UI I have built, inspired by BrainH https://github.com/brianh20
+ 
