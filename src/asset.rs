@@ -2,18 +2,7 @@ use tui::{
     layout::{Alignment, Constraint},
     style::{Color, Modifier, Style},
     text::{Span, Spans},
-    widgets::{
-        Block,
-        Borders, 
-        BorderType, 
-        Cell, 
-        List, 
-        ListItem, 
-        ListState, 
-        Paragraph, 
-        Table, 
-        Row
-    },
+    widgets::{Block, BorderType, Borders, Cell, List, ListItem, ListState, Paragraph, Row, Table},
 };
 
 use crate::database;
@@ -27,13 +16,14 @@ pub fn render_home<'a>() -> Paragraph<'a> {
         Spans::from(vec![Span::raw("")]),
         Spans::from(vec![Span::styled(
             "Planets-CLI",
-            Style::default()
-                .fg(Color::Magenta),
+            Style::default().fg(Color::Magenta),
         )]),
         Spans::from(vec![Span::raw("")]),
-        Spans::from(vec![Span::raw("
+        Spans::from(vec![Span::raw(
+            "
             Press 'p' to access the Planets, 'a' to add new Planet and 'd' to delete
-        ")]),
+        ",
+        )]),
     ])
     .alignment(Alignment::Center)
     .block(
@@ -46,7 +36,6 @@ pub fn render_home<'a>() -> Paragraph<'a> {
     home
 }
 
-
 pub fn render_planets<'a>(planet_list_state: &ListState) -> (Option<List<'a>>, Option<Table<'a>>) {
     let planets = Block::default()
         .borders(Borders::ALL)
@@ -54,8 +43,7 @@ pub fn render_planets<'a>(planet_list_state: &ListState) -> (Option<List<'a>>, O
         .title("Planets")
         .border_type(BorderType::Rounded);
 
-    let planet_list = database::read_data()
-        .expect("Could not find Planet in DB");
+    let planet_list = database::read_data().expect("Could not find Planet in DB");
     let items: Vec<_> = planet_list
         .iter()
         .map(|planet| {
@@ -71,9 +59,9 @@ pub fn render_planets<'a>(planet_list_state: &ListState) -> (Option<List<'a>>, O
     }
     let selected_planet = planet_list
         .get(
-                planet_list_state
-                    .selected()
-                    .expect("Could not get selected Planet")
+            planet_list_state
+                .selected()
+                .expect("Could not get selected Planet"),
         )
         .expect("Planet already Exists")
         .clone();
@@ -128,6 +116,6 @@ pub fn render_planets<'a>(planet_list_state: &ListState) -> (Option<List<'a>>, O
         Constraint::Percentage(5),
         Constraint::Percentage(20),
     ]);
-    
+
     (Some(list), Some(planet_detail))
 }

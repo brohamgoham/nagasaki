@@ -1,13 +1,13 @@
-use std::io;
-use std::fs;
 use chrono::prelude::*;
 use rand::{distributions::Alphanumeric, prelude::*};
 use serde::{Deserialize, Serialize};
+use std::fs;
+use std::io;
 use thiserror::Error;
-use tui::{widgets::{ListState}};
+use tui::widgets::ListState;
 
 /*
- * Database.rs connects to the filesystem and reads the DB file. 
+ * Database.rs connects to the filesystem and reads the DB file.
  */
 
 const DB_PATH: &str = "./data/db.json";
@@ -17,10 +17,10 @@ pub enum Error {
     #[error("error reading the DB file: {0}")]
     ReadDBError(#[from] io::Error),
     #[error("error parsing the DB file: {0}")]
-    ParseDBError(#[from] serde_json::Error)
+    ParseDBError(#[from] serde_json::Error),
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Clone)]
 pub struct Planet {
     pub id: usize,
     pub name: String,
@@ -30,26 +30,24 @@ pub struct Planet {
 }
 
 pub fn read_data() -> Result<Vec<Planet>, Error> {
-    let db_content = fs::read_to_string(DB_PATH)
-        .expect("Error trying to read the DB FILE!");
+    let db_content = fs::read_to_string(DB_PATH).expect("Error trying to read the DB FILE!");
 
-    let parsed: Vec<Planet> = serde_json::from_str(&db_content)
-        .expect("Error trying to parse the DB FILE!!!!!");
+    let parsed: Vec<Planet> =
+        serde_json::from_str(&db_content).expect("Error trying to parse the DB FILE!!!!!");
 
     Ok(parsed)
 }
 
 pub fn add_rand() -> Result<Vec<Planet>, Error> {
     let mut rng = rand::thread_rng();
-    let db_content = fs::read_to_string(DB_PATH)
-        .expect("Error trying to read the BD FILE!");
+    let db_content = fs::read_to_string(DB_PATH).expect("Error trying to read the BD FILE!");
 
-    let mut parsed: Vec<Planet> = serde_json::from_str(&db_content)
-        .expect("Cannot parse the DB FILE");
+    let mut parsed: Vec<Planet> =
+        serde_json::from_str(&db_content).expect("Cannot parse the DB FILE");
 
     let orbit = match rng.gen_range(0, 1) {
         0 => "Earth",
-        _ => "Jupiter",       
+        _ => "Jupiter",
     };
 
     let rand_people = Planet {
@@ -74,8 +72,9 @@ pub fn remove_planet_index(planet_list: &mut ListState) -> Result<(), Error> {
 
         if parsed.len() > 0 {
             parsed.remove(select);
-            fs::write(DB_PATH, &serde_json::to_vec(&parsed)
-               .expect("error trying to write the db file!")
+            fs::write(
+                DB_PATH,
+                &serde_json::to_vec(&parsed).expect("error trying to write the db file!"),
             )?;
 
             if select == 0 {

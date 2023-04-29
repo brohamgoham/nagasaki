@@ -12,12 +12,12 @@ use tui::{
     layout::{Constraint, Direction, Layout},
     style::{Color, Modifier, Style},
     text::{Span, Spans},
-    widgets::{Block, Borders, Tabs, ListState},
+    widgets::{Block, Borders, ListState, Tabs},
     Terminal,
 };
 
-use crate::database;
 use crate::asset;
+use crate::database;
 
 enum Event<T> {
     Input(T),
@@ -34,13 +34,12 @@ impl From<MenuOpps> for usize {
     fn from(input: MenuOpps) -> usize {
         match input {
             MenuOpps::Home => 0,
-            MenuOpps::Planets => 1
+            MenuOpps::Planets => 1,
         }
     }
 }
 
-
-pub fn start_terminal() -> Result <(), Box<dyn std::error::Error>> {
+pub fn start_terminal() -> Result<(), Box<dyn std::error::Error>> {
     enable_raw_mode().expect("Able to run in Raw Mode");
 
     // create new channel
@@ -147,7 +146,8 @@ pub fn start_terminal() -> Result <(), Box<dyn std::error::Error>> {
                     database::add_rand().expect("Able to add random planet");
                 }
                 KeyCode::Char('d') => {
-                    database::remove_planet_index(&mut planet_list_state).expect("Able to remove planet");
+                    database::remove_planet_index(&mut planet_list_state)
+                        .expect("Able to remove planet");
                 }
                 KeyCode::Down => {
                     if let Some(selected) = planet_list_state.selected() {
