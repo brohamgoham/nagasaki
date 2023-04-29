@@ -45,16 +45,24 @@ pub fn add_rand() -> Result<Vec<Planet>, Error> {
     let mut parsed: Vec<Planet> =
         serde_json::from_str(&db_content).expect("Cannot parse the DB FILE");
 
-    let orbit = match rng.gen_range(0, 1) {
+    let orbit = match rng.gen_range(0, 9) {
         0 => "Earth",
-        _ => "Jupiter",
+        1 => "Jupiter",
+        2 => "Mars",
+        3 => "Mercury",
+        4 => "Neptune",
+        5 => "Pluto",
+        6 => "Saturn",
+        7 => "Uranus",
+        8 => "Venus",
+        _ => "Sun",
     };
 
     let rand_people = Planet {
         id: rng.gen_range(0, 9999999),
         name: rng.sample_iter(Alphanumeric).take(10).collect(),
         category: orbit.to_owned(),
-        age: rng.gen_range(1, 15),
+        age: rng.gen_range(1000000000, 150000000000),
         created_at: Utc::now(),
     };
 

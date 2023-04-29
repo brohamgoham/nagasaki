@@ -86,15 +86,15 @@ pub fn render_planets<'a>(planet_list_state: &ListState) -> (Option<List<'a>>, O
             Style::default().add_modifier(Modifier::BOLD),
         )),
         Cell::from(Span::styled(
-            "Name",
+            "International Space Station Number",
             Style::default().add_modifier(Modifier::BOLD),
         )),
         Cell::from(Span::styled(
-            "Planet Category",
+            "Planet",
             Style::default().add_modifier(Modifier::BOLD),
         )),
         Cell::from(Span::styled(
-            "Age",
+            "Age(YEARS)",
             Style::default().add_modifier(Modifier::BOLD),
         )),
         Cell::from(Span::styled(
@@ -113,7 +113,7 @@ pub fn render_planets<'a>(planet_list_state: &ListState) -> (Option<List<'a>>, O
         Constraint::Percentage(5),
         Constraint::Percentage(20),
         Constraint::Percentage(20),
-        Constraint::Percentage(5),
+        Constraint::Percentage(10),
         Constraint::Percentage(20),
     ]);
 
