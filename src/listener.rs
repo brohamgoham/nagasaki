@@ -20,3 +20,14 @@ pub fn connector(mut stm: TcpStream) {
         .expect("Error trying to flush the stream");
 }
 
+pub fn listener() {
+    let listener = TcpListener::bind("127.0.0.1:9999")
+        .expect("Error trying to bind the listener");
+
+    thread::spawn(move || {
+        for stream in listener.incoming() {
+            let stream = stream?;
+            connector(stream);
+        }
+    });
+}
